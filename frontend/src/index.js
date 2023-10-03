@@ -12,11 +12,11 @@ const router = createBrowserRouter([
   { path: "/callback", element: <Callback /> },
 ]);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ChakraProvider>
       <RouterProvider router={router} />
     </ChakraProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

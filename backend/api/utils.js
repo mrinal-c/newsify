@@ -1,4 +1,5 @@
-const crypto = require("crypto");
+// const crypto = require("crypto");
+const { subtle } = require('crypto').webcrypto;
 
 function generateRandomString(length) {
   let text = "";
@@ -11,24 +12,23 @@ function generateRandomString(length) {
   return text;
 }
 
-async function generateCodeChallenge(codeVerifier) {
-  function base64encode(string) {
-    return btoa(String.fromCharCode.apply(null, new Uint8Array(string)))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
-  }
+function base64encode(string) {
+  return btoa(String.fromCharCode.apply(null, new Uint8Array(string)))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
 
+async function generateCodeChallenge(codeVerifier) {
   const encoder = new TextEncoder();
   const data = encoder.encode(codeVerifier);
-  const sha256Hash = crypto.createHash("sha256");
-  sha256Hash.update(data);
-  const digest = await sha256Hash.digest();
+  const digest = await subtle.digest("SHA-256", data);
 
-  return base64encode(digest);
+  return digest;
 }
 
 module.exports = {
   generateRandomString,
   generateCodeChallenge,
+  base64encode
 };

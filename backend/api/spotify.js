@@ -1,14 +1,10 @@
-const { generateRandomString, generateCodeChallenge } = require("./utils");
 const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const fetch = require('cross-fetch');
 
 exports.requestAuth = function (req, res) {
-  let code_verifier = generateRandomString(128);
   res.send({
-    clientId: clientId,
-    code_verifier: code_verifier,
-    state: generateRandomString(16),
-    codeChallenge: generateCodeChallenge(code_verifier),
+    clientId: clientId
   });
 };
 
@@ -18,16 +14,15 @@ exports.getAccessToken = function (req, res) {
     grant_type: "authorization_code",
     code: req.body.code,
     redirect_uri: req.body.redirect_uri,
-    code_verifier: req.body.codeVerifier,
-    client_id: clientId,
   });
 
   fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic " + Buffer.from(clientId + ":" + clientSecret).toString("base64"),
     },
-    body: params,
+    body: params.toString(),
   })
     .then((res) => res.json())
     .then((data) => {
@@ -35,3 +30,16 @@ exports.getAccessToken = function (req, res) {
     })
     .catch((err) => console.log(err));
 };
+
+exports.getUserData = function (req, res) {
+  fetch("https://api.spotify.com/v1/me", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + req.headers.authorization.split(" ")[1],
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      res.send(data);
+    });
+}
