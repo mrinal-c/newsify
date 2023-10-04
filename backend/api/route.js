@@ -1,5 +1,6 @@
 const express = require("express");
 const { requestAuth, getAccessToken, getUserData } = require("./spotify");
+const { getNews } = require("./news");
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -12,6 +13,7 @@ const routes = express.Router();
 routes.route("/requestAuth").get(requestAuth);
 routes.route("/token").post(getAccessToken);
 routes.route("/userData").get(getUserData);
+routes.route("/news").get(getNews);
 
 
 module.exports = routes;
