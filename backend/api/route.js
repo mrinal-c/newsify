@@ -1,11 +1,12 @@
-const express = require("express");
-const { requestAuth, getAccessToken, getUserData } = require("./spotify");
-const { getNews } = require("./news");
+import { Router } from "express";
+import { requestAuth, getAccessToken, getUserData } from "./spotify.js";
+import { getNews } from "./news.js";
+import { reaction } from "./recommendation.js";
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
-const routes = express.Router();
+export const routes = Router();
 
 
 
@@ -14,6 +15,4 @@ routes.route("/requestAuth").get(requestAuth);
 routes.route("/token").post(getAccessToken);
 routes.route("/userData").get(getUserData);
 routes.route("/news").get(getNews);
-
-
-module.exports = routes;
+routes.route("/reaction").post(reaction);
