@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { requestAuth, getAccessToken, getUserData } from "./spotify.js";
-import { getNews } from "./news.js";
 import { reaction } from "./recommendation.js";
+import { getUserNews } from "./news.js";
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -14,5 +14,5 @@ export const routes = Router();
 routes.route("/requestAuth").get(requestAuth);
 routes.route("/token").post(getAccessToken);
 routes.route("/userData").get(getUserData);
-routes.route("/news").get(getNews);
 routes.route("/reaction").post(reaction);
+routes.route("/news").get(getUserNews);
