@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border-radius: 20px;
+  background-color: #1DB954; /* Spotify green color, change as needed */
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  background-color: #168e3a; /* Darker shade on hover, change as needed */
+}
+
+.logo {
+  width: 20px; /* Adjust the size of the logo */
+  height: 20px; /* Adjust the size of the logo */
+  margin-right: 8px; /* Space between the logo and text */
+  border-radius: 50%; /* To make it circular */
+}
+
