@@ -21,7 +21,6 @@ export async function getNews (query) {
 
 export async function getUserNews(req, res) {
   let keywords = decodeURIComponent(req.query.keywords).split(" ");
-  console.log(keywords);
   let query = keywords.join(" OR ");
   let articles = await getNews(query);
   let uid = req.query.uid;

@@ -1,15 +1,12 @@
-const clientId = process.env.SPOTIFY_CLIENT_ID;
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 import fetch from 'cross-fetch';
 
 export function requestAuth (req, res) {
   res.send({
-    clientId: clientId
+    clientId: process.env.SPOTIFY_CLIENT_ID
   });
 }
 
 export function getAccessToken (req, res) {
-
   const params = new URLSearchParams({
     grant_type: "authorization_code",
     code: req.body.code,
@@ -20,7 +17,7 @@ export function getAccessToken (req, res) {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Basic " + Buffer.from(clientId + ":" + clientSecret).toString("base64"),
+      Authorization: "Basic " + Buffer.from(process.env.SPOTIFY_CLIENT_ID + ":" + process.env.SPOTIFY_CLIENT_SECRET).toString("base64"),
     },
     body: params.toString(),
   })
