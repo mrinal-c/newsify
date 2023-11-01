@@ -1,13 +1,38 @@
-const fetch = require("cross-fetch");
+//1. frontend signs user into Spotify
+//2. frontend sends music profile to backend
+//3. backend gets 15 articles from NewsAPI
+//4. backend retrieves upvote and downvote vectors from Pinecone db
+//5. backend calculates score for each article based on similarity/dissimilarity to upvote/downvote vectors
+//6. backend returns top 5 articles
+import fetch from "cross-fetch";
+import { queryUserVectors } from "./recommendation.js";
 
-exports.getNews = function (req, res) {
+export async function getNews (query) {
   let params = new URLSearchParams({
-    q: req.query.q,
+    q: query,
     apiKey: process.env.NEWS_API_KEY,
   });
-  fetch("https://newsapi.org/v2/everything?" + params)
-    .then((res) => res.json())
-    .then((data) => {
-      res.send(data);
-    });
+  let res = await fetch("https://newsapi.org/v2/everything?" + params);
+  let data = await res.json();
+  return data.articles.slice(0, 15);
 };
+
+
+
+export async function getUserNews(req, res) {
+  let keywords = decodeURIComponent(req.query.keywords).split(" ");
+  console.log(keywords);
+  let query = keywords.join(" OR ");
+  let articles = await getNews(query);
+  let uid = req.query.uid;
+  let scores = await queryUserVectors(articles, uid);
+
+  //sort articles by score
+  let articlesWithScores = articles.map((article, index) => ({
+    ...article,
+    score: scores[index],
+  }));
+  articlesWithScores.sort((a, b) => b.score - a.score);
+  res.send(articlesWithScores.slice(0, 5));
+
+}

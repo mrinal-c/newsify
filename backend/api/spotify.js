@@ -1,14 +1,14 @@
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const fetch = require('cross-fetch');
+import fetch from 'cross-fetch';
 
-exports.requestAuth = function (req, res) {
+export function requestAuth (req, res) {
   res.send({
     clientId: clientId
   });
-};
+}
 
-exports.getAccessToken = function (req, res) {
+export function getAccessToken (req, res) {
 
   const params = new URLSearchParams({
     grant_type: "authorization_code",
@@ -29,9 +29,9 @@ exports.getAccessToken = function (req, res) {
       res.send(data);
     })
     .catch((err) => console.log(err));
-};
+}
 
-exports.getUserData = function (req, res) {
+export function getUserData (req, res) {
   fetch("https://api.spotify.com/v1/me", {
     method: "GET",
     headers: {
