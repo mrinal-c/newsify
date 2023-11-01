@@ -40,3 +40,16 @@ export function getUserData (req, res) {
       res.send(data);
     });
 }
+
+export function getTopItems (req, res) {
+  fetch("https://api.spotify.com/v1/me/top/" + req.query.type, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + req.headers.authorization.split(" ")[1],
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      res.send(data);
+    });
+}

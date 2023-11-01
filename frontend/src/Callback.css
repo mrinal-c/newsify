@@ -12,3 +12,13 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+a.news-link {
+  color: #0077cc; /* Link text color */
+  text-decoration: none; /* Remove underline */
+}
+
+a.news-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+  color: #004466; /* Change color on hover */
+}
