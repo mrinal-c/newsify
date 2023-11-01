@@ -53,8 +53,9 @@ export async function reaction(req, res) {
 
 export async function queryUserVectors(articles, uid) {
   var scores = []
-  for (const article in articles) {
-    let embedding = await getEmbedding(article.description);
+  const titles = articles.map((article) => article.title);
+  let embeddings = await getEmbedding(titles);
+  for (const embedding of embeddings) {
     //get top 5 vectors
     let body = {
       topK: 5,
@@ -70,7 +71,8 @@ export async function queryUserVectors(articles, uid) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Api-Key": process.env.PINECONE_API_KEY,
+          // "Api-Key": process.env.PINECONE_API_KEY,
+          "Api-Key": "f4773cd9-8eaa-422c-adf9-dc5b8f885fad",
           accept: "application/json",
         },
         body: JSON.stringify(body),
@@ -85,8 +87,8 @@ export async function queryUserVectors(articles, uid) {
 
 function calculateScores(matches) {
   let score = 0;
-  for (const match in matches) {
-    if (match.metadata.reaction == "like") {
+  for (const match of matches) {
+    if (match.metadata.reaction === "like") {
       score += match.score;
     } else {
       score -= match.score;
