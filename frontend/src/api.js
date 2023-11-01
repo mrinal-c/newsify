@@ -5,7 +5,7 @@ export async function requestAuth() {
         const res = await fetch("http://localhost:5000/requestAuth");
         const data = await res.json();
         let state = generateRandomString(16);
-        let scope = "user-read-private user-read-email";
+        let scope = "user-read-private user-read-email user-top-read";
 
         let args = new URLSearchParams({
             response_type: "code",
@@ -35,6 +35,7 @@ export async function getAccessToken(code) {
             body: JSON.stringify(body),
         });
         const data = await res.json();
+        console.log("Access Token: " + data.access_token);
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
     } catch (err) {
@@ -58,9 +59,23 @@ export async function getUserData() {
     }
 }
 
-export async function getNews(queryString) {
+// export async function getNews(queryString) {
+//   let params = new URLSearchParams({
+//     q: queryString,
+//   });
+//   try {
+//         const res = await fetch("http://localhost:5000/news?" + params);
+//         const data = await res.json();
+//         return data;
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+
+export async function getUserNews(query, uid) {
   let params = new URLSearchParams({
-    q: queryString,
+    query: query,
+    uid: uid,
   });
   try {
         const res = await fetch("http://localhost:5000/news?" + params);
@@ -69,4 +84,20 @@ export async function getNews(queryString) {
     } catch (err) {
         console.log(err);
     }
+}
+
+export async function getUserTopItems() {
+    try {
+            const res = await fetch("http://localhost:5000/topItems?type=artists", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("access_token"),
+                },
+            });
+            const data = await res.json();
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
 }

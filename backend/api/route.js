@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requestAuth, getAccessToken, getUserData } from "./spotify.js";
+import { requestAuth, getAccessToken, getUserData, getTopItems } from "./spotify.js";
 import { reaction } from "./recommendation.js";
 import { getUserNews } from "./news.js";
 
@@ -16,3 +16,4 @@ routes.route("/token").post(getAccessToken);
 routes.route("/userData").get(getUserData);
 routes.route("/reaction").post(reaction);
 routes.route("/news").get(getUserNews);
+routes.route("/topItems").get(getTopItems);

@@ -20,8 +20,8 @@ export async function getNews (query) {
 
 
 export async function getUserNews(req, res) {
-  let keywords = decodeURIComponent(req.query.keywords).split(" ");
-  let query = keywords.join(" OR ");
+  let query = decodeURIComponent(req.query.query);
+  console.log("Query: ", query);
   let articles = await getNews(query);
   let uid = req.query.uid;
   let scores = await queryUserVectors(articles, uid);

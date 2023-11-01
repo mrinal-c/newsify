@@ -1,24 +1,64 @@
 import { useEffect, useState } from "react";
 import "./Callback.css";
-import { getAccessToken, getUserData } from "./api";
+import {
+  getAccessToken,
+  getUserData,
+  getUserNews,
+  getUserTopItems,
+} from "./api";
 
 function Callback() {
   const [user, setUser] = useState(null);
+  const [news, setNews] = useState(null);
+  const [topItems, setTopItems] = useState(null);
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (topItems != null) {
+      getMyNews();
+    }
+  }, [topItems]);
+
+  const loadData = async () => {
+    await getUser();
+    await showTopItems();
+  };
+
+  const getUser = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     let code = urlParams.get("code");
-    getAccessToken(code)
-      .then(() => {
-        getUserData().then((data) => {
-          console.log(data);
-          setUser(data);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    await getAccessToken(code);
+    let data = await getUserData();
+    console.log(data);
+    setUser(data);
+  };
+
+  const showTopItems = async () => {
+    let data = await getUserTopItems();
+    console.log(data);
+    let genreSet = new Set();
+    data.items[0].genres.forEach((genre) => {
+      genreSet.add(genre);
+    });
+    data.items[1].genres.forEach((genre) => {
+      genreSet.add(genre);
+    });
+    data.items[2].genres.forEach((genre) => {
+      genreSet.add(genre);
+    });
+    setTopItems([...genreSet]);
+  };
+
+  const getMyNews = async () => {;
+    let uid = "123";
+    console.log(topItems);
+    let data = await getUserNews(topItems.join(" OR "), uid);
+    console.log(data);
+    setNews(data);
+  };
 
   return (
     <div className="Callback">
@@ -26,6 +66,22 @@ function Callback() {
         <p>Welcome to Newsify!</p>
         <p>Here is your Spotify Display Name:</p>
         {user && <p>{user.display_name}</p>}
+        <p>
+          Here are your top genres from your favorite artists: 
+          {topItems != null ? topItems.join(", ") : null}
+        </p>
+        <div>
+          Here are your recommended articles based on your top genres:
+          <ul>
+          {news != null ? news.map((article, index) => (
+            <li key={index}>
+              <a href={article.url} className="news-link">{article.title}</a>
+              <p>{article.description}</p>
+            </li>
+          )) : null}
+          </ul>
+        </div>
+        
       </header>
     </div>
   );
