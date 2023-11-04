@@ -28,6 +28,27 @@ export function getAccessToken (req, res) {
     .catch((err) => console.log(err));
 }
 
+export function refreshAccessToken (req, res) {
+  const params = new URLSearchParams({
+    grant_type: "refresh_token",
+    refresh_token: req.body.refresh_token,
+  });
+
+  fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic " + Buffer.from(process.env.SPOTIFY_CLIENT_ID + ":" + process.env.SPOTIFY_CLIENT_SECRET).toString("base64"),
+    },
+    body: params.toString(),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => console.log(err));
+}
+
 export function getUserData (req, res) {
   fetch("https://api.spotify.com/v1/me", {
     method: "GET",

@@ -5,6 +5,7 @@ import {
   getUserData,
   getUserNews,
   getUserTopItems,
+  refreshAccessToken,
 } from "./api";
 
 function Callback() {
@@ -23,14 +24,25 @@ function Callback() {
   }, [topItems]);
 
   const loadData = async () => {
+    await checkAuth();
     await getUser();
     await showTopItems();
   };
 
+  const checkAuth = async () => {
+    console.log("checking auth");
+    if (localStorage.getItem("access_token") == undefined) {
+      console.log("no token");
+      const urlParams = new URLSearchParams(window.location.search);
+      let code = urlParams.get("code");
+      await getAccessToken(code);
+    } else if (localStorage.getItem("expires_at") < Date.now()) {
+      console.log("expired token");
+      await refreshAccessToken();
+    }
+  };
+
   const getUser = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    let code = urlParams.get("code");
-    await getAccessToken(code);
     let data = await getUserData();
     console.log(data);
     setUser(data);
@@ -52,7 +64,7 @@ function Callback() {
     setTopItems([...genreSet]);
   };
 
-  const getMyNews = async () => {;
+  const getMyNews = async () => {
     let uid = "123";
     console.log(topItems);
     let data = await getUserNews(topItems.join(" OR "), uid);
@@ -67,21 +79,24 @@ function Callback() {
         <p>Here is your Spotify Display Name:</p>
         {user && <p>{user.display_name}</p>}
         <p>
-          Here are your top genres from your favorite artists: 
+          Here are your top genres from your favorite artists:
           {topItems != null ? topItems.join(", ") : null}
         </p>
         <div>
           Here are your recommended articles based on your top genres:
           <ul>
-          {news != null ? news.map((article, index) => (
-            <li key={index}>
-              <a href={article.url} className="news-link">{article.title}</a>
-              <p>{article.description}</p>
-            </li>
-          )) : null}
+            {news != null
+              ? news.map((article, index) => (
+                  <li key={index}>
+                    <a href={article.url} className="news-link">
+                      {article.title}
+                    </a>
+                    <p>{article.description}</p>
+                  </li>
+                ))
+              : null}
           </ul>
         </div>
-        
       </header>
     </div>
   );
