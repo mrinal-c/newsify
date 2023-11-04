@@ -38,10 +38,33 @@ export async function getAccessToken(code) {
         console.log("Access Token: " + data.access_token);
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
+        localStorage.setItem("expires_at", Date.now() + (data.expires_in * 1000));
     } catch (err) {
         console.log(err);
     }
 }
+
+export async function refreshAccessToken() {
+    let body = {
+        refresh_token: localStorage.getItem("refresh_token"),
+    };
+    try {
+            const res = await fetch("http://localhost:5000/refreshToken", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+            const data = await res.json();
+            console.log("Access Token: " + data.access_token);
+            localStorage.setItem("access_token", data.access_token);
+            localStorage.setItem("refresh_token", data.refresh_token);
+            localStorage.setItem("expires_at", Date.now() + data.expires_in * 1000);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 export async function getUserData() {
   try {
