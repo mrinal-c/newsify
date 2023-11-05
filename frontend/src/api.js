@@ -2,7 +2,7 @@
 import { generateRandomString } from "./utils";
 export async function requestAuth() {
   try {
-        const res = await fetch("http://localhost:5000/requestAuth");
+        const res = await fetch("http://localhost:6000/requestAuth");
         const data = await res.json();
         let state = generateRandomString(16);
         let scope = "user-read-private user-read-email user-top-read";
@@ -27,7 +27,7 @@ export async function getAccessToken(code) {
     redirect_uri: "http://localhost:3000/callback",
   };
   try {
-        const res = await fetch("http://localhost:5000/token", {
+        const res = await fetch("http://localhost:6000/token", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export async function refreshAccessToken() {
         refresh_token: localStorage.getItem("refresh_token"),
     };
     try {
-            const res = await fetch("http://localhost:5000/refreshToken", {
+            const res = await fetch("http://localhost:6000/refreshToken", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export async function refreshAccessToken() {
 
 export async function getUserData() {
   try {
-        const res = await fetch("http://localhost:5000/userData", {
+        const res = await fetch("http://localhost:6000/userData", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -101,7 +101,7 @@ export async function getUserNews(query, uid) {
     uid: uid,
   });
   try {
-        const res = await fetch("http://localhost:5000/news?" + params);
+        const res = await fetch("http://localhost:6000/news?" + params);
         const data = await res.json();
         return data;
     } catch (err) {
@@ -111,7 +111,7 @@ export async function getUserNews(query, uid) {
 
 export async function getUserTopItems() {
     try {
-            const res = await fetch("http://localhost:5000/topItems?type=artists", {
+            const res = await fetch("http://localhost:6000/topItems?type=artists", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
