@@ -45,7 +45,7 @@
   border-radius: 20px;
   background-color: #1DB954; /* Spotify green color, change as needed */
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -57,8 +57,8 @@
 }
 
 .logo {
-  width: 20px; /* Adjust the size of the logo */
-  height: 20px; /* Adjust the size of the logo */
+  width: 30px; /* Adjust the size of the logo */
+  height: 30px; /* Adjust the size of the logo */
   margin-right: 8px; /* Space between the logo and text */
   border-radius: 50%; /* To make it circular */
 }

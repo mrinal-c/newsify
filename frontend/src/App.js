@@ -15,7 +15,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <LoginCard onLogin={login}/>
+        <p>Welcome to Newsify!</p>
+        <button className="login-btn" onClick={login}>
+          <img src={spotifyLogo} alt="Spotify Logo" className="logo" />
+          Login with Spotify
+        </button>
       </header>
     </div>
   );
