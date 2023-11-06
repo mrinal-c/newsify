@@ -7,6 +7,7 @@ import {
   getUserData,
   getUserNews,
   getUserTopItems,
+  refreshAccessToken,
 } from "./api";
 
 function Callback() {
@@ -28,15 +29,26 @@ function Callback() {
 
   const loadData = async () => {
     setLoading(true);
+    await checkAuth();
     await getUser();
     await showTopItems();
     setLoading(false);
   };
 
+  const checkAuth = async () => {
+    console.log("checking auth");
+    if (localStorage.getItem("access_token") == undefined) {
+      console.log("no token");
+      const urlParams = new URLSearchParams(window.location.search);
+      let code = urlParams.get("code");
+      await getAccessToken(code);
+    } else if (localStorage.getItem("expires_at") < Date.now()) {
+      console.log("expired token");
+      await refreshAccessToken();
+    }
+  };
+
   const getUser = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    let code = urlParams.get("code");
-    await getAccessToken(code);
     let data = await getUserData();
     console.log(data);
     setUser(data);
@@ -60,6 +72,7 @@ function Callback() {
 
   const getMyNews = async () => {;
     setFetchingNews(true);
+  const getMyNews = async () => {
     let uid = "123";
     console.log(topItems);
     let data = await getUserNews(topItems.join(" OR "), uid);

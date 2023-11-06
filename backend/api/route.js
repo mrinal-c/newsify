@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requestAuth, getAccessToken, getUserData, getTopItems } from "./spotify.js";
+import { requestAuth, getAccessToken, getUserData, getTopItems, refreshAccessToken } from "./spotify.js";
 import { reaction } from "./recommendation.js";
 import { getUserNews } from "./news.js";
 
@@ -13,6 +13,7 @@ export const routes = Router();
 // This section will help you get a list of all the records.
 routes.route("/requestAuth").get(requestAuth);
 routes.route("/token").post(getAccessToken);
+routes.route("/refreshToken").post(refreshAccessToken);
 routes.route("/userData").get(getUserData);
 routes.route("/reaction").post(reaction);
 routes.route("/news").get(getUserNews);
