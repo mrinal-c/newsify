@@ -37,7 +37,7 @@ function Callback() {
 
   const checkAuth = async () => {
     console.log("checking auth");
-    if (localStorage.getItem("access_token") == undefined) {
+    if (localStorage.getItem("access_token") == null || localStorage.getItem("access_token") == 'undefined') {
       console.log("no token");
       const urlParams = new URLSearchParams(window.location.search);
       let code = urlParams.get("code");
