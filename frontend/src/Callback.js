@@ -72,7 +72,6 @@ function Callback() {
 
   const getMyNews = async () => {;
     setFetchingNews(true);
-  const getMyNews = async () => {
     let uid = "123";
     console.log(topItems);
     let data = await getUserNews(topItems.join(" OR "), uid);

@@ -5,7 +5,7 @@ import {routes} from "./api/route.js";
 
 dotenv.config({ path: "./config.env" });
 const app = express();
-const port = 6000;
+const port = 5000;
 app.use(cors());
 
 app.use(json());
