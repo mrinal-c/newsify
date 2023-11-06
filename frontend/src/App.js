@@ -16,7 +16,7 @@ function App() {
         <p>Welcome to Newsify!</p>
         <button className="login-btn" onClick={login}>
           <img src={spotifyLogo} alt="Spotify Logo" className="logo" />
-          Login
+          Login with Spotify
         </button>
       </header>
     </div>
