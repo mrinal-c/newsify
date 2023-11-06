@@ -17,6 +17,37 @@ import { getEmbedding } from "./embedding.js";
 import { fetch } from "cross-fetch";
 import { v4 as uuidv4 } from "uuid";
 
+export async function bulkReaction(req, res) {
+  let texts = req.body.headlines;
+  let embeddings = await getEmbedding(texts);
+  let vectors = [];
+  for (let i = 0; i < texts.length; i++) {
+    vectors.push({
+      id: uuidv4(),
+      values: embeddings[i],
+      metadata: {
+        headline: texts[i],
+        reaction: req.body.reactions[i],
+        uid: "base",
+      },
+    });
+  }
+  fetch("https://newsify-a03f785.svc.gcp-starter.pinecone.io/vectors/upsert", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Api-Key": process.env.PINECONE_API_KEY,
+      accept: "application/json",
+    },
+    body: JSON.stringify({ vectors: vectors }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => res.send(err));
+}
+
 export async function reaction(req, res) {
   let texts = [req.body.headline];
   let embeddings = await getEmbedding(texts);
@@ -51,14 +82,23 @@ export async function reaction(req, res) {
     .catch((err) => res.send(err));
 }
 
-export async function queryUserVectors(articles, uid) {
-  var scores = []
+export async function getArticleScores(articles, uid) {
+  let userScores = await queryVectors(articles, uid);
+  let baseScores = await queryVectors(articles, "base");
+  //return combined score, weigh user score more
+  return userScores.map(
+    (score, index) => (0.95 * score) + (0.05 * baseScores[index])
+  );
+}
+
+async function queryVectors(articles, uid) {
+  var scores = [];
   const titles = articles.map((article) => article.title);
   let embeddings = await getEmbedding(titles);
   for (const embedding of embeddings) {
     //get top 5 vectors
     let body = {
-      topK: 5,
+      topK: 25,
       filter: {
         uid: uid,
       },

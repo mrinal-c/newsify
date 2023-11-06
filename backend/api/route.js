@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { requestAuth, getAccessToken, getUserData, getTopItems, refreshAccessToken } from "./spotify.js";
-import { reaction } from "./recommendation.js";
+import { reaction, bulkReaction } from "./recommendation.js";
 import { getUserNews } from "./news.js";
 
 // recordRoutes is an instance of the express router.
@@ -16,5 +16,6 @@ routes.route("/token").post(getAccessToken);
 routes.route("/refreshToken").post(refreshAccessToken);
 routes.route("/userData").get(getUserData);
 routes.route("/reaction").post(reaction);
+routes.route("/bulkReaction").post(bulkReaction);
 routes.route("/news").get(getUserNews);
 routes.route("/topItems").get(getTopItems);

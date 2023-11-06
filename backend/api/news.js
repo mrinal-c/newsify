@@ -5,7 +5,7 @@
 //5. backend calculates score for each article based on similarity/dissimilarity to upvote/downvote vectors
 //6. backend returns top 5 articles
 import fetch from "cross-fetch";
-import { queryUserVectors } from "./recommendation.js";
+import { getArticleScores } from "./recommendation.js";
 
 export async function getNews (query) {
   let params = new URLSearchParams({
@@ -14,7 +14,7 @@ export async function getNews (query) {
   });
   let res = await fetch("https://newsapi.org/v2/everything?" + params);
   let data = await res.json();
-  return data.articles.slice(0, 15);
+  return data.articles.slice(0, 50);
 };
 
 
@@ -24,7 +24,7 @@ export async function getUserNews(req, res) {
   console.log("Query: ", query);
   let articles = await getNews(query);
   let uid = req.query.uid;
-  let scores = await queryUserVectors(articles, uid);
+  let scores = await getArticleScores(articles, uid);
 
   //sort articles by score
   let articlesWithScores = articles.map((article, index) => ({
