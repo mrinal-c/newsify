@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import "./Callback.css";
-import Spinner from './Spinner';
-import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+import Spinner from "./Spinner";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import {
   getAccessToken,
   getUserData,
   getUserNews,
   getUserTopItems,
   refreshAccessToken,
+  postReaction,
 } from "./api";
 
 function Callback() {
   const [user, setUser] = useState(null);
   const [news, setNews] = useState(null);
-  const [topItems, setTopItems] = useState(null);
+  const [topGenres, setTopGenres] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetchingNews, setFetchingNews] = useState(false);
 
@@ -22,10 +24,10 @@ function Callback() {
   }, []);
 
   useEffect(() => {
-    if (topItems != null) {
+    if (topGenres != null) {
       getMyNews();
     }
-  }, [topItems]);
+  }, [topGenres]);
 
   const loadData = async () => {
     setLoading(true);
@@ -37,7 +39,10 @@ function Callback() {
 
   const checkAuth = async () => {
     console.log("checking auth");
-    if (localStorage.getItem("access_token") == null || localStorage.getItem("access_token") == 'undefined') {
+    if (
+      localStorage.getItem("access_token") == null ||
+      localStorage.getItem("access_token") == "undefined"
+    ) {
       console.log("no token");
       const urlParams = new URLSearchParams(window.location.search);
       let code = urlParams.get("code");
@@ -67,38 +72,45 @@ function Callback() {
     data.items[2].genres.forEach((genre) => {
       genreSet.add(genre);
     });
-    setTopItems([...genreSet]);
+    setTopGenres([...genreSet]);
+    setTopArtists(data.items.slice(0, 5).map((item) => item.name));
   };
 
-  const getMyNews = async () => {;
+  const getMyNews = async () => {
     setFetchingNews(true);
-    let uid = "123";
-    console.log(topItems);
-    let data = await getUserNews(topItems.join(" OR "), uid);
+    let data = await getUserNews(topArtists.join(" OR ") + " OR " + topGenres.join(" OR "), user.id);
     console.log(data);
     setNews(data);
     setFetchingNews(false);
   };
 
   const renderGenres = () => {
-    return topItems?.map((genre, index) => (
-      <div key={index} className="genre-tag">{genre}</div>
+    return topGenres?.map((genre, index) => (
+      <div key={index} className="genre-tag">
+        {genre}
+      </div>
+    ));
+  };
+
+  const renderArtists = () => {
+    return topArtists?.map((artist, index) => (
+      <div key={index} className="genre-tag">
+        {artist}
+      </div>
     ));
   };
 
   // Define the event handlers for like and dislike button clicks
-  const handleLike = (articleId) => {
-    console.log('Liked article with id:', articleId);
-    // Here, you could also update the state or perform API calls as necessary
+  const handleLike = (article) => {
+    // Call the postReaction function from api.js
+    postReaction(article.title, "like", user.id);
   };
 
-  const handleDislike = (articleId) => {
-    console.log('Disliked article with id:', articleId);
-    // Similarly, update the state or perform API calls if required
+  const handleDislike = (article) => {
+    postReaction(article.title, "dislike", user.id);
   };
 
   // ... the rest of your component
-
 
   return (
     <div className="Callback">
@@ -117,22 +129,34 @@ function Callback() {
             <div className="user-card">
               <h2 className="user-name">Welcome, {user?.display_name}!</h2>
               <p className="top-genres-intro">Your top genres are:</p>
-              <div className="genre-tags-container">
-                {renderGenres()}
-              </div>
+              <div className="genre-tags-container">{renderGenres()}</div>
+              <p className="top-genres-intro">Your top artists are:</p>
+              <div className="genre-tags-container">{renderArtists()}</div>
             </div>
-            {fetchingNews && <div className="progress-indicator"><Spinner /></div>}
+            {fetchingNews && (
+              <div className="progress-indicator">
+                <Spinner />
+              </div>
+            )}
             <div className="news-container">
               {news?.map((article, index) => (
                 <div key={index} className="card">
-                  <a href={article.url} className="card-title">{article.title}</a>
+                  <a href={article.url} className="card-title" target="_blank">
+                    {article.title}
+                  </a>
                   <p className="card-content">{article.description}</p>
                   {/* Reaction buttons inside the card */}
                   <div className="reaction-buttons">
-                    <button className="button-like" onClick={() => handleLike(article.id)}>
+                    <button
+                      className="button-like"
+                      onClick={() => handleLike(article)}
+                    >
                       <FaThumbsUp />
                     </button>
-                    <button className="button-dislike" onClick={() => handleDislike(article.id)}>
+                    <button
+                      className="button-dislike"
+                      onClick={() => handleDislike(article)}
+                    >
                       <FaThumbsDown />
                     </button>
                   </div>

@@ -87,7 +87,7 @@ export async function getArticleScores(articles, uid) {
   let baseScores = await queryVectors(articles, "base");
   //return combined score, weigh user score more
   return userScores.map(
-    (score, index) => (0.95 * score) + (0.05 * baseScores[index])
+    (score, index) => (0.8 * score) + (0.2 * baseScores[index])
   );
 }
 
