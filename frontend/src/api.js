@@ -2,23 +2,23 @@
 import { generateRandomString } from "./utils";
 export async function requestAuth() {
   try {
-        const res = await fetch("http://localhost:5000/requestAuth");
-        const data = await res.json();
-        let state = generateRandomString(16);
-        let scope = "user-read-private user-read-email user-top-read";
+    const res = await fetch("http://localhost:5000/requestAuth");
+    const data = await res.json();
+    let state = generateRandomString(16);
+    let scope = "user-read-private user-read-email user-top-read";
 
-        let args = new URLSearchParams({
-            response_type: "code",
-            client_id: data.clientId,
-            scope: scope,
-            redirect_uri: "http://localhost:3000/callback",
-            state: state,
-        });
-        let url = "https://accounts.spotify.com/authorize?" + args;
-        return url;
-    } catch (err) {
-        console.log(err);
-    }
+    let args = new URLSearchParams({
+      response_type: "code",
+      client_id: data.clientId,
+      scope: scope,
+      redirect_uri: "http://localhost:3000/callback",
+      state: state,
+    });
+    let url = "https://accounts.spotify.com/authorize?" + args;
+    return url;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function getAccessToken(code) {
@@ -27,59 +27,59 @@ export async function getAccessToken(code) {
     redirect_uri: "http://localhost:3000/callback",
   };
   try {
-        const res = await fetch("http://localhost:5000/token", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        });
-        const data = await res.json();
-        console.log("Access Token: " + data.access_token);
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("refresh_token", data.refresh_token);
-        localStorage.setItem("expires_at", Date.now() + (data.expires_in * 1000));
-    } catch (err) {
-        console.log(err);
-    }
+    const res = await fetch("http://localhost:5000/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    console.log("Access Token: " + data.access_token);
+    localStorage.setItem("access_token", data.access_token);
+    localStorage.setItem("refresh_token", data.refresh_token);
+    localStorage.setItem("expires_at", Date.now() + data.expires_in * 1000);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function refreshAccessToken() {
-    let body = {
-        refresh_token: localStorage.getItem("refresh_token"),
-    };
-    try {
-            const res = await fetch("http://localhost:5000/refreshToken", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(body),
-            });
-            const data = await res.json();
-            console.log("Access Token: " + data.access_token);
-            localStorage.setItem("access_token", data.access_token);
-            localStorage.setItem("refresh_token", data.refresh_token);
-            localStorage.setItem("expires_at", Date.now() + data.expires_in * 1000);
-        } catch (err) {
-            console.log(err);
-        }
-    }
+  let body = {
+    refresh_token: localStorage.getItem("refresh_token"),
+  };
+  try {
+    const res = await fetch("http://localhost:5000/refreshToken", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    console.log("Access Token: " + data.access_token);
+    localStorage.setItem("access_token", data.access_token);
+    localStorage.setItem("refresh_token", data.refresh_token);
+    localStorage.setItem("expires_at", Date.now() + data.expires_in * 1000);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export async function getUserData() {
   try {
-        const res = await fetch("http://localhost:5000/userData", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("access_token"),
-            },
-        });
-        const data = await res.json();
-        return data;
-    } catch (err) {
-        console.log(err);
-    }
+    const res = await fetch("http://localhost:5000/userData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function getUserNews(query, uid) {
@@ -88,26 +88,47 @@ export async function getUserNews(query, uid) {
     uid: uid,
   });
   try {
-        const res = await fetch("http://localhost:5000/news?" + params);
-        const data = await res.json();
-        return data;
-    } catch (err) {
-        console.log(err);
-    }
+    const res = await fetch("http://localhost:5000/news?" + params);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function getUserTopItems() {
-    try {
-            const res = await fetch("http://localhost:5000/topItems?type=artists", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("access_token"),
-                },
-            });
-            const data = await res.json();
-            return data;
-        } catch (err) {
-            console.log(err);
-        }
+  try {
+    const res = await fetch("http://localhost:5000/topItems?type=artists", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function postReaction(headline, reaction, uid) {
+  let body = {
+    headline: headline,
+    reaction: reaction,
+    uid: uid,
+  };
+  try {
+    const res = await fetch("http://localhost:5000/reaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
