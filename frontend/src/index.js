@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
-  { path: "/callback", element: <Callback /> },
+  { path: "/callback", element: <Callback /> }
 ]);
 root.render(
   // <React.StrictMode>
