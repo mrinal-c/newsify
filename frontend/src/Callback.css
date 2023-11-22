@@ -166,3 +166,8 @@
 .button-like:hover, .button-dislike:hover {
   color: #1db954; /* Spotify's brand green color */
 }
+
+/*Make like button green on click*/
+.button-like:active {
+  color: #1db954;
+}

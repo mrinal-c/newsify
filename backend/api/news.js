@@ -11,6 +11,8 @@ export async function getNews (query) {
   let params = new URLSearchParams({
     q: query,
     apiKey: process.env.NEWS_API_KEY,
+    sortBy: "relevancy",
+    language: "en"
   });
   let res = await fetch("https://newsapi.org/v2/everything?" + params);
   let data = await res.json();
@@ -32,6 +34,6 @@ export async function getUserNews(req, res) {
     score: scores[index],
   }));
   articlesWithScores.sort((a, b) => b.score - a.score);
-  res.send(articlesWithScores.slice(0, 5));
+  res.send(articlesWithScores.slice(0, 10));
 
 }

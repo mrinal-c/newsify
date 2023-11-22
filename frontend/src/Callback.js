@@ -18,6 +18,7 @@ function Callback() {
   const [topArtists, setTopArtists] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetchingNews, setFetchingNews] = useState(false);
+  const [recordAction, setRecordAction] = useState(true);
 
   useEffect(() => {
     loadData();
@@ -39,6 +40,7 @@ function Callback() {
 
   const checkAuth = async () => {
     console.log("checking auth");
+    console.log(localStorage.getItem("access_token"));
     if (
       localStorage.getItem("access_token") == null ||
       localStorage.getItem("access_token") == "undefined"
@@ -78,7 +80,10 @@ function Callback() {
 
   const getMyNews = async () => {
     setFetchingNews(true);
-    let data = await getUserNews(topArtists.join(" OR ") + " OR " + topGenres.join(" OR "), user.id);
+    let data = await getUserNews(
+      topArtists.join(" OR ") + " OR " + topGenres.join(" OR "),
+      user.id
+    );
     console.log(data);
     setNews(data);
     setFetchingNews(false);
@@ -103,11 +108,18 @@ function Callback() {
   // Define the event handlers for like and dislike button clicks
   const handleLike = (article) => {
     // Call the postReaction function from api.js
-    postReaction(article.title, "like", user.id);
+    if (recordAction) {
+      postReaction(article.title, "like", user.id);
+    }
+
+    //color the button green
+    
   };
 
   const handleDislike = (article) => {
-    postReaction(article.title, "dislike", user.id);
+    if (recordAction) {
+      postReaction(article.title, "dislike", user.id);
+    }
   };
 
   // ... the rest of your component
@@ -132,6 +144,17 @@ function Callback() {
               <div className="genre-tags-container">{renderGenres()}</div>
               <p className="top-genres-intro">Your top artists are:</p>
               <div className="genre-tags-container">{renderArtists()}</div>
+
+              <div className="record-action">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={recordAction}
+                    onChange={() => setRecordAction(!recordAction)}
+                  />
+                  Record Action
+                </label>
+              </div>
             </div>
             {fetchingNews && (
               <div className="progress-indicator">
