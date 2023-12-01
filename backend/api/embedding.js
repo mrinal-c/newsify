@@ -15,6 +15,7 @@ export async function getEmbedding(texts) {
   });
 
   let data = await res.json();
+  console.log("Data: ", data);
   console.log("Number of embeddings: ", data.embeddings.length);
   return data.embeddings;
 }
