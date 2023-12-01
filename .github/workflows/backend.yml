@@ -53,7 +53,7 @@ jobs:
         docker tag mrinalc/newsify-backend:${{ github.sha }} gcr.io/newsify-backend/newsify-backend:${{ github.sha }}
         docker push gcr.io/newsify-backend/newsify-backend:${{ github.sha }}
 
-        gcloud run deploy \
+        gcloud run deploy newsify-backend \
           --image gcr.io/newsify-backend/newsify-backend:${{ github.sha }} \
           --platform managed \
           --port 5000 \
