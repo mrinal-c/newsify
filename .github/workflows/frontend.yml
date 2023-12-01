@@ -50,7 +50,7 @@ jobs:
         docker tag mrinalc/newsify-frontend:${{ github.sha }} gcr.io/newsify-406815/newsify-frontend:${{ github.sha }}
         docker push gcr.io/newsify-406815/newsify-frontend:${{ github.sha }}
 
-        gcloud run deploy \
+        gcloud run deploy newsify \
           --image gcr.io/newsify-406815/newsify-frontend:${{ github.sha }} \
           --platform managed \
           --allow-unauthenticated \
