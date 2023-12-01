@@ -39,6 +39,6 @@ export async function getUserNews(req, res) {
     score: scores[index],
   }));
   articlesWithScores.sort((a, b) => b.score - a.score);
-  res.send(articlesWithScores.slice(0, 5));
+  res.send(articlesWithScores.slice(0, 12));
 
 }
