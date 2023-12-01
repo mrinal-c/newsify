@@ -56,4 +56,4 @@ jobs:
           --allow-unauthenticated \
           --region us-central1 \
           --port 3000 \
-          --env-vars-file env.yaml \
+          --env-vars-file env.yaml
