@@ -23,7 +23,7 @@ export async function getUserNews(req, res) {
   let query = decodeURIComponent(req.query.query);
   console.log("Query: ", query);
   let articles = await getNews(query);
-  console.log("Articles: ", articles);
+  console.log("Article Length: ", articles.length);
   if (articles.length === 0) {
     res.send([]);
     return;
