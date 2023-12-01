@@ -43,7 +43,7 @@ jobs:
       uses: google-github-actions/setup-gcloud@v0.2.0
       with:
         service_account_key: '${{ secrets.BACKEND_GCP_CREDENTIALS }}'
-        project_id: your-project-id
+        project_id: newsify-backend
 
     - name: Configure Google Cloud CLI
       run: gcloud auth configure-docker
