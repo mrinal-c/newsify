@@ -11,6 +11,7 @@ COPY src/ /app/src
 COPY public/ /app/public
 RUN npm ci
 
+EXPOSE 3000
 
 # start app
 CMD ["npm", "start"]

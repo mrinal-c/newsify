@@ -1,4 +1,5 @@
 // import { generateRandomString } from "./utils";
+const APP_URL = "http://localhost:5000";
 import { generateRandomString } from "./utils";
 export async function requestAuth() {
   try {
