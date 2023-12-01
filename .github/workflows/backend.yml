@@ -3,7 +3,9 @@ name: Build and Deploy Backend
 on:
   push:
     branches:
-      - docker-deploy
+      - main
+    paths:
+      - backend/**
 
 jobs:
   build_and_deploy:

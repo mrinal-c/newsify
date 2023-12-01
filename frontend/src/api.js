@@ -1,9 +1,8 @@
 // import { generateRandomString } from "./utils";
-const APP_URL = "http://localhost:5000";
 import { generateRandomString } from "./utils";
 export async function requestAuth() {
   try {
-    const res = await fetch("http://localhost:5000/requestAuth");
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/requestAuth`);
     const data = await res.json();
     let state = generateRandomString(16);
     let scope = "user-read-private user-read-email user-top-read";
@@ -12,7 +11,7 @@ export async function requestAuth() {
       response_type: "code",
       client_id: data.clientId,
       scope: scope,
-      redirect_uri: "http://localhost:3000/callback",
+      redirect_uri: `${process.env.REACT_APP_FRONTEND_URL}/callback`,
       state: state,
     });
     let url = "https://accounts.spotify.com/authorize?" + args;
@@ -25,10 +24,10 @@ export async function requestAuth() {
 export async function getAccessToken(code) {
   let body = {
     code: code,
-    redirect_uri: "http://localhost:3000/callback",
+    redirect_uri: `${process.env.REACT_APP_FRONTEND_URL}/callback`,
   };
   try {
-    const res = await fetch("http://localhost:5000/token", {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +49,7 @@ export async function refreshAccessToken() {
     refresh_token: localStorage.getItem("refresh_token"),
   };
   try {
-    const res = await fetch("http://localhost:5000/refreshToken", {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/refreshToken`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +68,7 @@ export async function refreshAccessToken() {
 
 export async function getUserData() {
   try {
-    const res = await fetch("http://localhost:5000/userData", {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/userData`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +88,7 @@ export async function getUserNews(query, uid) {
     uid: uid,
   });
   try {
-    const res = await fetch("http://localhost:5000/news?" + params);
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/news?` + params);
     const data = await res.json();
     return data;
   } catch (err) {
@@ -99,7 +98,7 @@ export async function getUserNews(query, uid) {
 
 export async function getUserTopItems() {
   try {
-    const res = await fetch("http://localhost:5000/topItems?type=artists", {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/topItems?type=artists`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +119,7 @@ export async function postReaction(headline, reaction, uid) {
     uid: uid,
   };
   try {
-    const res = await fetch("http://localhost:5000/reaction", {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/reaction`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

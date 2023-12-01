@@ -3,7 +3,7 @@ name: Build and Deploy Frontend
 on:
   push:
     branches:
-      - main
+      - docker-deploy
 
 jobs:
   build_and_deploy:
@@ -24,6 +24,11 @@ jobs:
     - name: Install Dependencies
       run: |
         npm ci
+    
+    - name: Add Environment Variables
+      run: |
+          echo "REACT_APP_FRONTEND_URL: '${{ secrets.FRONTEND_URL }}'" > env.yaml
+          echo "REACT_APP_BACKEND_URL: '${{ secrets.BACKEND_URL }}'" >> env.yaml
 
     - name: Build Docker Image
       run: |
@@ -47,4 +52,7 @@ jobs:
         gcloud run deploy \
           --image gcr.io/newsify-406815/newsify-frontend:${{ github.sha }} \
           --platform managed \
-          --allow-unauthenticated
+          --allow-unauthenticated \
+          --region us-central1 \
+          --port 3000 \
+          --env-vars-file env.yaml \
