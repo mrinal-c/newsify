@@ -11,6 +11,8 @@ export async function getNews (query) {
   let params = new URLSearchParams({
     q: query,
     apiKey: process.env.NEWS_API_KEY,
+    sortBy: "relevancy",
+    language: "en"
   });
   let res = await fetch("https://newsapi.org/v2/everything?" + params);
   let data = await res.json();
