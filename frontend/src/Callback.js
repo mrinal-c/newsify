@@ -80,6 +80,9 @@ function Callback() {
     setFetchingNews(true);
     let data = await getUserNews(topArtists.join(" OR ") + " OR " + topGenres.join(" OR "), user.id);
     console.log(data);
+    if (data.length === 0) {
+      console.log("no news");
+    }
     setNews(data);
     setFetchingNews(false);
   };
