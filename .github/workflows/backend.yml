@@ -58,4 +58,5 @@ jobs:
           --platform managed \
           --port 5000 \
           --env-vars-file env.yaml \
-          --allow-unauthenticated
+          --allow-unauthenticated \
+          --region us-central1 \
