@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:18-alpine
+FROM node:18
 
 # set working directory
 WORKDIR /app
@@ -11,6 +11,7 @@ COPY src/ /app/src
 COPY public/ /app/public
 RUN npm ci
 
+EXPOSE 3000
 
 # start app
 CMD ["npm", "start"]

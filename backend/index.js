@@ -3,7 +3,7 @@ import cors from "cors";
 import express, { json, urlencoded } from "express";
 import {routes} from "./api/route.js";
 
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: ".env" });
 const app = express();
 const port = 5000;
 app.use(cors());
