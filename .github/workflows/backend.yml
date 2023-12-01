@@ -50,7 +50,7 @@ jobs:
 
     - name: Deploy to Google Cloud Run
       run: |
-        docker tag mrinalc/newsify-frontend:${{ github.sha }} gcr.io/newsify-backend/newsify-backend:${{ github.sha }}
+        docker tag mrinalc/newsify-backend:${{ github.sha }} gcr.io/newsify-backend/newsify-backend:${{ github.sha }}
         docker push gcr.io/newsify-backend/newsify-backend:${{ github.sha }}
 
         gcloud run deploy \

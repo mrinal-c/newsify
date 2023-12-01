@@ -41,10 +41,10 @@ jobs:
 
     - name: Deploy to Google Cloud Run
       run: |
-        docker tag mrinalc/newsify-frontend:${{ github.sha }} gcr.io/newsify/newsify-frontend:${{ github.sha }}
-        docker push gcr.io/newsify/newsify-frontend:${{ github.sha }}
+        docker tag mrinalc/newsify-frontend:${{ github.sha }} gcr.io/newsify-406815/newsify-frontend:${{ github.sha }}
+        docker push gcr.io/newsify-406815/newsify-frontend:${{ github.sha }}
 
         gcloud run deploy \
-          --image gcr.io/newsify/newsify-frontend:${{ github.sha }} \
+          --image gcr.io/newsify-406815/newsify-frontend:${{ github.sha }} \
           --platform managed \
           --allow-unauthenticated
