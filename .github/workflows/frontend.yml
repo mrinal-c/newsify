@@ -29,6 +29,7 @@ jobs:
       run: |
           echo "REACT_APP_FRONTEND_URL: '${{ secrets.FRONTEND_URL }}'" > env.yaml
           echo "REACT_APP_BACKEND_URL: '${{ secrets.BACKEND_URL }}'" >> env.yaml
+          echo "NODE_OPTIONS: '--max-old-space-size=4096'" >> env.yaml
 
     - name: Build Docker Image
       run: |
