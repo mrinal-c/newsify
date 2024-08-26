@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { getEmbedding } from "./helpers";
 
 export async function POST(request) {
   try {
