@@ -4,7 +4,7 @@ export default auth((req) => {
   if (!req.auth && req.nextUrl.pathname !== "/") {
     return Response.redirect(new URL("/", req.nextUrl.origin));
   } else if (req.auth && req.nextUrl.pathname === "/") {
-    return Response.redirect(new URL("/dashboard", req.nextUrl.origin));
+    return Response.redirect(new URL("/test", req.nextUrl.origin));
   }
 });
 

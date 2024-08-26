@@ -32,7 +32,7 @@ export default async function Page() {
         <form
           action={async () => {
             "use server";
-            await signIn('spotify',{redirectTo: '/dashboard'});
+            await signIn('spotify', {redirectTo: '/test'});
           }}
         >
           <button type="submit" className="login-btn">
