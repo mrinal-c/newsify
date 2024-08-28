@@ -2,18 +2,17 @@ import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getArticleScores, getNews } from "./helpers";
 
-export async function GET(request) {
+export async function getUserNews(query) {
+  "use server";
   try {
     const session = await auth();
 
-    const searchParams = request.nextUrl.searchParams;
-    const query = decodeURIComponent(searchParams.get("query"));
     const articles = await getNews(query);
 
     if (articles.length === 0) {
-      return NextResponse.json({
+      return {
         articles: [],
-      });
+      };
     }
 
     const uid = session.user.id;
@@ -26,9 +25,9 @@ export async function GET(request) {
     }));
     articlesWithScores.sort((a, b) => b.score - a.score);
 
-    return NextResponse.json({
+    return {
       articles: articlesWithScores.slice(0, 15),
-    });
+    };
   } catch (err) {
     console.log(err);
   }

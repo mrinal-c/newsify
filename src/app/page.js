@@ -1,29 +1,8 @@
 import { auth, signIn } from "@/auth";
-import "@/app/page.css";
+import "@/app/styles/page.css";
 import spotifyLogo from "../../public/spotify.png";
 
 export default async function Page() {
-  // const session = await auth();
-  // if (!session)
-  //   return (
-  //     <div>
-  //       Not authenticated
-  // <form
-  //   action={async () => {
-  //     "use server";
-  //     await signIn();
-  //   }}
-  // >
-  //   <button type="submit">Sign in</button>
-  // </form>
-  //     </div>
-  //   );
-
-  // return (
-  //   <div>
-  //     <pre>{JSON.stringify(session, null, 2)}</pre>
-  //   </div>
-  // );
 
   return (
     <div className="App">
@@ -32,7 +11,7 @@ export default async function Page() {
         <form
           action={async () => {
             "use server";
-            await signIn('spotify', {redirectTo: '/test'});
+            await signIn('spotify', {redirectTo: '/dashboard'});
           }}
         >
           <button type="submit" className="login-btn">

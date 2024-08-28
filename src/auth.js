@@ -11,11 +11,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt({token, user, account}) {
       if (account?.provider === "spotify") {
         token.accessToken = account.access_token;
+        token.accessTokenExpiresAt = account.expires_at;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      session.accessTokenExpiresAt = token.accessTokenExpiresAt;
       return session;
     }
   }

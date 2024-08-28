@@ -1,14 +1,14 @@
 import { auth } from "@/auth";
-import { NextRequest, NextResponse } from "next/server";
 import { getEmbedding } from "./helpers";
 
-export async function POST(request) {
+export async function postReaction(headline, reaction) {
+  "use server";
   try {
     const session = await auth();
 
-    const body = await request.json();
+    // const body = await request.json();
 
-    let texts = [req.body.headline];
+    let texts = [headline];
 
     let embeddings = await getEmbedding(texts);
 
@@ -18,9 +18,9 @@ export async function POST(request) {
           id: uuidv4(),
           values: embeddings[0],
           metadata: {
-            headline: body.headline,
-            reaction: body.reaction,
-            uid: body.uid,
+            headline: headline,
+            reaction: reaction,
+            uid: session.user.id,
           },
         },
       ],
@@ -41,7 +41,7 @@ export async function POST(request) {
 
 
     const data = await res.json();
-    return NextResponse.json(data);
+    return data;
   } catch (err) {
     console.log(err);
   }

@@ -1,0 +1,168 @@
+/* Callback.css */
+
+/* Callback.css */
+
+.genre-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  
+  /* Callback.css */
+  .progress-indicator {
+    position: absolute;
+    top: 50%; /* center vertically in the viewport */
+    left: 50%; /* center horizontally in the viewport */
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Continue with the rest of the styles */
+  
+  
+  .top-genres-intro {
+    color: #fff; /* This sets the text color to white */
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  
+  .genre-tag {
+    background-color: #1db954; /* Spotify's brand green color */
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: default;
+    transition: background-color 0.3s ease;
+  }
+  
+  .genre-tag:hover {
+    background-color: #1ed760; /* Lighter green on hover */
+  }
+  
+  /* Continue with the rest of the styles */
+  
+  
+  .user-card {
+    background: #1e1e1e; /* Slightly lighter than the background for emphasis */
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative; /* For absolute positioning of elements inside */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .user-name {
+    color: #1db954; /* Spotify's brand green color */
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .top-genres {
+    color: #b3b3b3;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Continue with the rest of the styles */
+  
+  
+  /* Callback.css */
+  .Callback {
+    font-family: 'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #fff;
+    background: #121212; /* Spotify's dark background */
+    min-height: 100vh;
+  }
+  
+  .Callback-Header {
+    padding: 2rem 0;
+  }
+  
+  .nav {
+    background: #000;
+    padding: 1rem 2rem;
+  }
+  
+  .nav a {
+    color: #1db954; /* Spotify's brand green color */
+    text-decoration: none;
+    margin-right: 2rem;
+  }
+  
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .user-info {
+    margin-bottom: 2rem;
+  }
+  
+  .news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .card {
+    background: #181818;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: transform 0.2s; /* Animation */
+    position: relative;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Card pop effect on hover */
+  }
+  
+  .card-title {
+    color: #1db954; /* Spotify's brand green color */
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  
+  .card-content {
+    color: #b3b3b3;
+    margin-top: 0.5rem;
+  }
+  
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  /* Rest of the styles remain unchanged */
+  /* Add this new CSS for the reaction buttons */
+  .reaction-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+  }
+  
+  .button-like, .button-dislike {
+    background: transparent;
+    border: none;
+    color: #b3b3b3; /* Light grey, can be changed as needed */
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .button-like:hover, .button-dislike:hover {
+    color: #1db954; /* Spotify's brand green color */
+  }

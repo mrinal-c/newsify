@@ -53,8 +53,7 @@ async function queryVectors(articles, uid) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "Api-Key": process.env.PINECONE_API_KEY,
-            "Api-Key": "f4773cd9-8eaa-422c-adf9-dc5b8f885fad",
+            "Api-Key": process.env.PINECONE_API_KEY,
             accept: "application/json",
           },
           body: JSON.stringify(body),
@@ -86,4 +85,22 @@ function calculateScores(matches) {
     }
   }
   return score;
+}
+
+async function getEmbedding(texts) {
+  let body = {
+    texts: texts,
+  };
+  let res = await fetch("https://api.cohere.ai/v1/embed", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + process.env.COHERE_API_KEY,
+    },
+    body: JSON.stringify(body),
+  });
+
+  let data = await res.json();
+  return data.embeddings;
 }
