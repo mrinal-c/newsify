@@ -59,9 +59,7 @@ export default async function Dashboard() {
         </div>
       </header>
 
-      <body>
-        <NewsGrid query={query}/>
-      </body>
+      <NewsGrid query={query}/>
     </div>
   );
 }

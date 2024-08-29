@@ -48,7 +48,7 @@ async function queryVectors(articles, uid) {
       };
 
       let res = await fetch(
-        "https://newsify-a03f785.svc.gcp-starter.pinecone.io/query",
+        "https://newsify-a03f785.svc.aped-4627-b74a.pinecone.io/query",
         {
           method: "POST",
           headers: {

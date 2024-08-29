@@ -1,15 +1,20 @@
 import { auth, signOut } from "@/auth";
 
 export default auth((req) => {
-  if (!req.auth && req.nextUrl.pathname !== "/") {
-    return Response.redirect(new URL("/", req.nextUrl.origin));
+  const { auth, nextUrl } = req;
+  if (!auth && nextUrl.pathname !== "/") {
+    return Response.redirect(new URL("/", nextUrl.origin));
   }
 
-  const currentTime = Math.floor(Date.now() / 1000);
-  
-  if (req.auth && req.auth.accessTokenExpiresAt <= currentTime) {
-    return Response.redirect(new URL("/", req.nextUrl.origin));
+  if (auth && nextUrl.pathname === '/') {
+    return Response.redirect(new URL('/dashboard', nextUrl.origin));
   }
+
+  // const currentTime = Math.floor(Date.now() / 1000);
+  
+  // if (req.auth && req.auth.accessTokenExpiresAt <= currentTime) {
+  //   return Response.redirect(new URL("/", req.nextUrl.origin));
+  // }
 
 
 });

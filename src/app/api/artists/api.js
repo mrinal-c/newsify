@@ -2,7 +2,6 @@
 import { auth, signOut } from "@/auth";
 
 export async function getArtists() {
-  console.log('gay');
   try {
     const session = await auth();
     const res = await fetch(
@@ -12,10 +11,6 @@ export async function getArtists() {
         headers: { "Authorization":  `Bearer ${session?.accessToken}` }
       }
     );
-
-    if (res.status == 401) {
-      await signOut({redirectTo: '/'});
-    }
 
     const data = await res.json();
     return data;
