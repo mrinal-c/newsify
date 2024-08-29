@@ -3,25 +3,16 @@ import '@/app/styles/globals.css';
 import NewsGrid from "../components/NewsGrid";
 import { auth, signOut } from "@/auth";
 import { getArtists } from '../api/artists/api';
+import { getDashboardData } from './utils';
 
 export default async function Dashboard() {
 
   const session = await auth();
 
-  const data = await getArtists();
-  
-  const artists = data.items.slice(0, 5).map((item) => item.name);
-  const genres = [];
-  data.items[0].genres.forEach((genre) => {
-    genres.push(genre);
-  });
-  data.items[1].genres.forEach((genre) => {
-    genres.push(genre);
-  });
-  const query = artists.join(" OR ") + " OR " + genres.join(" OR ");
+  const { artists, genres, query } = await getDashboardData();
 
   const renderGenres = () => {
-    return genres.map((genre, index) => (
+    return genres?.map((genre, index) => (
       <div key={index} className="genre-tag">
         {genre}
       </div>
@@ -29,7 +20,7 @@ export default async function Dashboard() {
   };
 
   const renderArtists = () => {
-    return artists.map((artist, index) => (
+    return artists?.map((artist, index) => (
       <div key={index} className="genre-tag">
         {artist}
       </div>
@@ -51,7 +42,7 @@ export default async function Dashboard() {
 
       <header className="Callback-Header">
         <div className="user-card">
-          <h2 className="user-name">Welcome, {session.user.name}!</h2>
+          <h2 className="user-name">Welcome, {session?.user.name}!</h2>
           <p className="top-genres-intro">Your top genres are:</p>
           <div className="genre-tags-container">{renderGenres()}</div>
           <p className="top-genres-intro">Your top artists are:</p>
