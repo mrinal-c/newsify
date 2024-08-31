@@ -1,13 +1,14 @@
-import { auth, signIn } from "@/auth";
+import { signIn } from "@/auth";
 import "@/app/styles/page.css";
-import spotifyLogo from "../../public/spotify.png";
+import Image from 'next/image';
+import spotifyLogo from '/public/spotify.png';
 
 export default async function Page() {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Welcome to Newsify!</p>
+    <div className="text-center">
+      <header className="">
+        <p className="text-5xl">Welcome to Newsify!</p>
         <form
           action={async () => {
             "use server";
@@ -15,9 +16,10 @@ export default async function Page() {
           }}
         >
           <button type="submit" className="login-btn">
-            <img src={spotifyLogo} alt="Spotify Logo" className="logo" />
+            <Image src={spotifyLogo} width={25} height={25} alt="spotifyLogo"/>
             Login with Spotify
           </button>
+
         </form>
       </header>
     </div>

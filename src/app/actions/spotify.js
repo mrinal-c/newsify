@@ -1,5 +1,5 @@
 "use server";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 
 export async function getArtists() {
   try {

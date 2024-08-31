@@ -2,7 +2,6 @@ import '@/app/styles/more.css';
 import '@/app/styles/globals.css';
 import NewsGrid from "../components/NewsGrid";
 import { auth, signOut } from "@/auth";
-import { getArtists } from '../api/artists/api';
 import { getDashboardData } from './utils';
 
 export default async function Dashboard() {

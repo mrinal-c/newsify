@@ -1,5 +1,5 @@
 'use server';
-import { getUserNews } from "../api/news/api";
+import { getUserNews } from "@/app/actions/news";
 import ArticleCard from "./ArticleCard";
 
 export default async function NewsGrid({query}) {

@@ -1,5 +1,5 @@
 "use server";
-import { getArtists } from "../api/artists/api";
+import { getArtists } from '@/app/actions/spotify';
 
 export async function getDashboardData() {
   const data = await getArtists();
