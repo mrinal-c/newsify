@@ -1,13 +1,12 @@
 'use server';
-import '@/app/styles/more.css';
 
 export default async function ArticleCard({article, index}) {
   return (
-    <div key={index} className="card">
-      <a href={article.url} className="card-title" target="_blank">
+    <div key={index} className="rounded-lg p-4 transition-transform duration-200 hover:scale-105 bg-[#303030]">
+      <a href={article.url} className="text-spotify-green text-xl" target="_blank">
         {article.title}
       </a>
-      <p className="card-content">{article.description}</p>
+      <p className="mt-2 text-white">{article.description}</p>
       {/* Reaction buttons inside the card */}
       {/* <div className="reaction-buttons">
         <button className="button-like" onClick={() => handleLike(article)}>
