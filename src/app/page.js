@@ -6,6 +6,7 @@ import spotifyGreenImg from "/public/spotify-green.png";
 import searchImg from "/public/search.png";
 import diagramImg from "/public/diagram.png";
 import newspaperImg from "/public/newspaper.png";
+import { sendMail } from "./actions/email";
 
 export default async function Page() {
   return (
@@ -34,8 +35,8 @@ export default async function Page() {
           </form>
         </nav>
       </header>
-      <main className="flex-grow">
-        <section className="mt-8">
+      <main className="flex-grow mt-20">
+        <section id="#how-it-works">
           <p className="text-5xl underline">Music + News. All in One.</p>
           <div className="flex justify-center mt-10 gap-36 px-20 items-center">
             <div className="flex flex-col p-4 items-center gap-6">
@@ -93,6 +94,34 @@ export default async function Page() {
               <p className="text-sm  text-wrap">Read and Enjoy!</p>
             </div>
           </div>
+        </section>
+
+        <section id="#add-email" className="mt-12">
+          <form
+            className="flex flex-col items-center"
+            action={async (formData) => {
+              "use server";
+              await sendMail(formData.get('email'));
+            }}
+          >
+            <p className="text-xl">
+              Want to get started for free? Submit your email here.
+            </p>
+            <div className="mt-4">
+              <input
+                type="text"
+                name="email"
+                required
+                className="w-64 rounded-md h-8 text-black"
+              ></input>
+              <button
+                type="submit"
+                className="ml-8 bg-spotify-green rounded-md px-3 py-1"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </section>
       </main>
 
