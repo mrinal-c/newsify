@@ -1,0 +1,8 @@
+- one main landing page
+--- has login button that just has a modal for spotify login
+--- blog type info about what newsify is
+--- unprotected route, but middleware should route to dashboard if it detects user
+
+- dashboard page
+--- exact same as before!!!
+--- protected route
