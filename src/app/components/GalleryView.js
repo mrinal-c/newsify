@@ -50,7 +50,7 @@ export default function GalleryView() {
   return (
     <div className="flex flex-col items-center">
       {/* Render only the current div */}
-      <div className="flex flex-col p-4 m-4 items-center gap-6 rounded-xl border-2 border-black shadow-2xl drop-shadow-xl bg-gray-600">
+      <div className="flex flex-col p-4 m-4 items-center gap-6 rounded-xl border-2 border-black shadow-2xl drop-shadow-xl bg-[#303030]">
         <p className="text-xl">{divs[currentIndex].title}</p>
         <Image
           src={divs[currentIndex].imgSrc}
