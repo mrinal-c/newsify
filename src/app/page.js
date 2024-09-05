@@ -2,11 +2,8 @@ import { signIn } from "@/auth";
 import "@/app/styles/page.css";
 import Image from "next/image";
 import spotifyWhiteImg from "/public/spotify-white.png";
-import spotifyGreenImg from "/public/spotify-green.png";
-import searchImg from "/public/search.png";
-import diagramImg from "/public/diagram.png";
-import newspaperImg from "/public/newspaper.png";
-import { sendMail } from "./actions/email";
+import EmailForm from "@/app/components/EmailForm";
+import GalleryView from "@/app/components/GalleryView";
 
 export default async function Page() {
   return (
@@ -36,99 +33,28 @@ export default async function Page() {
         </nav>
       </header>
       <main className="flex-grow mt-20">
-        <section id="#how-it-works">
-          <p className="text-5xl underline">Music + News. All in One.</p>
-          <div className="flex justify-center mt-10 gap-36 px-20 items-center">
-            <div className="flex flex-col p-4 items-center gap-6">
-              <p className="text-xl text-wrap">Pull Spotify History</p>
-              <Image
-                src={spotifyGreenImg}
-                width={100}
-                height={100}
-                alt="spotify logo"
-              />
-              <p className="text-sm text-wrap">
-                Login to Spotify to provide Newsify with your recent listening
-                history
-              </p>
-            </div>
-            <div className="flex flex-col p-4 items-center gap-6">
-              <p className="text-xl text-wrap">
-                Find Articles based on Keywords
-              </p>
-              <Image
-                src={searchImg}
-                width={100}
-                height={100}
-                alt="search image"
-              />
-              <p className="text-sm text-wrap">
-                Use top artists and genres to pull content from the{" "}
-                <a href="https://newsapi.org/" target="_blank">
-                  NewsAPI
-                </a>
-              </p>
-            </div>
-            <div className="flex flex-col p-4 items-center gap-6">
-              <p className="text-xl text-wrap">
-                Rank Articles using ML Strategies
-              </p>
-              <Image
-                src={diagramImg}
-                width={100}
-                height={100}
-                alt="image of machine learning"
-              />
-              <p className="text-sm  text-wrap">
-                Generate Article Embeddings to compare results
-              </p>
-            </div>
-            <div className="flex flex-col p-4 items-center gap-6">
-              <p className="text-xl text-wrap">Show Results, Get Feedback</p>
-              <Image
-                src={newspaperImg}
-                width={100}
-                height={100}
-                alt="Newspaper Image"
-              />
-              <p className="text-sm  text-wrap">Read and Enjoy!</p>
-            </div>
-          </div>
+        <p className="text-5xl underline">Music + News. All in One.</p>
+        <section id="#how-it-works" className="mt-16">
+          {/* <p className="text-xl">How it Works</p> */}
+          <GalleryView />
         </section>
 
-        <section id="#add-email" className="mt-12">
-          <form
-            className="flex flex-col items-center"
-            action={async (formData) => {
-              "use server";
-              await sendMail(formData.get('email'));
-            }}
-          >
-            <p className="text-xl">
-              Want to get started for free? Submit your email here.
-            </p>
-            <div className="mt-4">
-              <input
-                type="text"
-                name="email"
-                required
-                className="w-64 rounded-md h-8 text-black"
-              ></input>
-              <button
-                type="submit"
-                className="ml-8 bg-spotify-green rounded-md px-3 py-1"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+        <section id='#disclaimer' className="mt-16">
+            <p>Newsify is a work in progress. I will be refining the news selection algorithms, UI, and add features as time goes on.</p>
+        </section>
+
+        <section id="#add-email" className="mt-16">
+          <EmailForm />
         </section>
       </main>
 
       <footer>
-        <div className="py-4 text-sm">
-          <p>Copyright © 2024 Mrinal Chanshetty. All Rights Reserved.</p>
-          <a href="https://www.flaticon.com/free-icons" title="find icons">
+        <div className="py-4 text-xs">
+          <a href="https://www.mrinalchanshetty.com" target="_blank">
+            Copyright © 2024 Mrinal Chanshetty. All Rights Reserved.
+          </a>
+          <br></br>
+          <a href="https://www.flaticon.com" target='_blank' title="find icons">
             Icons created by iconset.co - Flaticon
           </a>
         </div>

@@ -7,8 +7,8 @@ export async function sendMail(email) {
             host: "live.smtp.mailtrap.io",
             port: 587,
             auth: {
-              user: "api",
-              pass: "62c5e72bd372d0660e030cd11485af36"
+              user: process.env.MAILTRAP_USER,
+              pass: process.env.MAILTRAP_PASS
             }
           });
     
