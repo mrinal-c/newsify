@@ -1,7 +1,13 @@
 import { auth, signOut } from "@/auth";
+import { NextResponse } from "next/server";
 
 export default auth((req) => {
   const { auth, nextUrl } = req;
+
+  if (nextUrl.pathname === '/error') {
+    return NextResponse.next();
+  }
+
   if (!auth && nextUrl.pathname !== "/") {
     return Response.redirect(new URL("/", nextUrl.origin));
   }
