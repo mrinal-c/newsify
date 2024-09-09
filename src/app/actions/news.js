@@ -38,6 +38,7 @@ async function getNews(query) {
         apiKey: process.env.NEWS_API_KEY,
         sortBy: "relevancy",
         language: "en",
+        searchIn: 'title,description'
       });
   
       let res = await fetch("https://newsapi.org/v2/everything?" + params);

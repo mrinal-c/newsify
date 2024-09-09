@@ -33,23 +33,22 @@ export default async function Page() {
         </nav>
       </header>
       <main className="flex-grow mt-20">
-        <p className="text-5xl underline">Music + News. All in One.</p>
+        <p className="text-5xl underline px-3">Music + News. All in One.</p>
         <section id="#how-it-works" className="mt-16">
-          {/* <p className="text-xl">How it Works</p> */}
           <GalleryView />
         </section>
 
-        <section id='#disclaimer' className="mt-16">
+        <section id='#disclaimer' className="mt-16 px-3">
             <p>Newsify is a work in progress. I will be refining the news selection algorithms, UI, and add features as time goes on.</p>
         </section>
 
-        <section id="#add-email" className="mt-16">
+        <section id="#add-email" className="mt-16 px-3">
           <EmailForm />
         </section>
       </main>
 
       <footer>
-        <div className="py-4 text-xs">
+        <div className="pt-8 pb-4 text-xs">
           <a href="https://www.mrinalchanshetty.com" target="_blank">
             Copyright © 2024 Mrinal Chanshetty. All Rights Reserved.
           </a>
