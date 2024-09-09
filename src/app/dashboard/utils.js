@@ -15,9 +15,9 @@ export async function getDashboardData() {
 
   const genres = Array.from(genreSet);
   const query = 
-  `(${artists.map((artist) => `+"${artist}"`).join(" OR ")}) AND (${genres.map((genre) => `+"${genre}"`).join(" OR ")})
+  `(${artists.map((artist) => `"${artist}"`).join(" OR ")}) AND (${genres.map((genre) => `"${genre}"`).join(" OR ")})
   OR
-  (${genres.map((genre) => `+"${genre}"`).join(" OR ")}) AND (${['+\"music\"', '+\"album\"', '+\"tour\"', '+\"single\"', '+\"song\"'].join(" OR ")})
+  (${genres.map((genre) => `"${genre}"`).join(" OR ")}) AND (${['\"music\"', '\"album\"', '\"tour\"', '\"single\"', '\"song\"'].join(" OR ")})
   
   `;
   console.log(query);

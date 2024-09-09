@@ -1,8 +1,5 @@
-- one main landing page
---- has login button that just has a modal for spotify login
---- blog type info about what newsify is
---- unprotected route, but middleware should route to dashboard if it detects user
-
-- dashboard page
---- exact same as before!!!
---- protected route
+- get a user's full name too
+- spacing and titles in main page
+- refined news algo
+- thumbs up/down
+- set up supabase to store accepted users and receive feedback
